@@ -2,8 +2,12 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System;
+using Dog_Go.Utilities;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DogWalker.Repositories
+namespace Dog_Go.Repositories
 {
     public class DogRepository
     {
@@ -40,7 +44,7 @@ namespace DogWalker.Repositories
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    List<Dog> dogs = new List<Dog>();
+                    List<Dog> Dogs = new List<Dog>();
 
                     while (reader.Read())
                     {
@@ -49,17 +53,17 @@ namespace DogWalker.Repositories
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             Breed = reader.GetString(reader.GetOrdinal("Breed")),
-                            Notes = reader.GetString(reader.GetOrdinal("Notes")),
-                            ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
+                            Notes = ReaderHelpers.GetNullableString(reader, "Notes"),
+                            ImageUrl = ReaderHelpers.GetNullableString(reader, "ImageUrl"),
                             OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
                         };
 
-                        dogs.Add(dog);
+                        Dogs.Add(dog);
                         
                     }
                     
                     reader.Close();
-                    return dogs;
+                    return Dogs;
                 }
             }
         }

@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
-namespace DogWalker.Repositories
+namespace Dog_Go.Repositories
 {
     public class OwnerRepository
     {
@@ -86,7 +86,8 @@ namespace DogWalker.Repositories
                             Email = reader.GetString(reader.GetOrdinal("Email")),
                             Address = reader.GetString(reader.GetOrdinal("Address")),
                             Phone = reader.GetString(reader.GetOrdinal("Phone")),
-                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
+                            Dogs = new List<Dog>(id)
                         };
 
                         reader.Close();

@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
-namespace DogWalker.Repositories
+namespace Dog_Go.Repositories
 {
     public class WalkerRepository
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dog_Go.Models;
-using DogWalker.Repositories;
+using Dog_Go.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -33,12 +33,12 @@ namespace Dog_Go.Controllers
         {
             Owner owner = _ownerRepo.GetOwnerById(id);
 
-            //if (owner == null)
-            //{
-            //    return NotFound();
-            //}
+            if (owner == null)
+            {
+                return NotFound();
+            }
 
-            //owner.Dogs = _dogRepo.GetDogsByOwnerId(id);
+            owner.Dogs = _dogRepo.GetDogsByOwnerId(id);
 
             return View(owner);
         }
