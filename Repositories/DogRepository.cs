@@ -1,5 +1,4 @@
 ﻿using Dog_Go.Models;
-using DogGo.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -24,7 +23,7 @@ namespace DogWalker.Repositories
             }
         }
 
-        public Dog GetDogsByOwnerId(int id)
+        public List<Dog> GetDogsByOwnerId(int ownerId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -32,46 +31,35 @@ namespace DogWalker.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT d.Id, d.[Name], d.OwnerId, d.Breed, d.Notes, d.ImageUrl, o.Name AS OwnerName
-                        FROM Dog d
-                        LEFT JOIN Owner o ON d.OwnerId = d.Id
-                        WHERE Id = o.Id
+                        SELECT Id, [Name], Breed, Notes, ImageUrl, OwnerId
+                        FROM Dog
+                        WHERE OwnerId = @ownerId
                     ";
 
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@ownerId", ownerId);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read())
+                    List<Dog> dogs = new List<Dog>();
+
+                    while (reader.Read())
                     {
-                        Dog owner = new Dog
+                        Dog dog = new Dog()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             Breed = reader.GetString(reader.GetOrdinal("Breed")),
                             Notes = reader.GetString(reader.GetOrdinal("Notes")),
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
-                            OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId"))
-                            Owner = new Owner
-                            {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                Name = reader.GetString(reader.GetOrdinal("Name")),
-                                Email = reader.GetString(reader.GetOrdinal("Email")),
-                                Address = reader.GetString(reader.GetOrdinal("Address")),
-                                Phone = reader.GetString(reader.GetOrdinal("Phone")),
-                                NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
-                                Neigh
-                            }
+                            OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
                         };
 
-                        reader.Close();
-                        return owner;
+                        dogs.Add(dog);
+                        
                     }
-                    else
-                    {
-                        reader.Close();
-                        return null;
-                    }
+                    
+                    reader.Close();
+                    return dogs;
                 }
             }
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DogGo.Models;
+using Dog_Go.Models;
 
 namespace Dog_Go.Models
 {
@@ -15,5 +15,6 @@ namespace Dog_Go.Models
         public string Phone { get; set; }
         public int NeighborhoodId { get; set; }
         public Neighborhood Neighborhood { get; set; }
+        public List<Dog> Dogs { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DogGo.Models
+namespace Dog_Go.Models
 {
     public class Walker
     {
