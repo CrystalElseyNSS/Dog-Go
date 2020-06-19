@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Dog_Go.Models;
 using Dog_Go.Repositories;
+using DogGo.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,7 @@ namespace Dog_Go.Controllers
     {
         private readonly OwnerRepository _ownerRepo;
         private readonly DogRepository _dogRepo;
+        private readonly WalkerRepository _walkerRepo;
         private IConfiguration config;
 
         // The constructor accepts an IConfiguration object as a parameter. This class comes from the ASP.NET framework and is useful for retrieving things out of the appsettings.json file like connection strings.
@@ -23,6 +25,7 @@ namespace Dog_Go.Controllers
         {
             _ownerRepo = new OwnerRepository(config);
             _dogRepo = new DogRepository(config);
+            _walkerRepo = new WalkerRepository(config);
         }
         // GET: HomeController1
         public ActionResult Index()
@@ -32,18 +35,24 @@ namespace Dog_Go.Controllers
         }
 
         // GET: HomeController1/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int id) 
         {
             Owner owner = _ownerRepo.GetOwnerById(id);
+            List<Dog> dogs = _dogRepo.GetDogsByOwnerId(owner.Id);
+            List<Walker> walkers = _walkerRepo.GetWalkersByNeighborhoodId(owner.NeighborhoodId);
+
+            ProfileViewModel profileVM = new ProfileViewModel()
+            {
+                Owner = owner,
+                Dogs = dogs,
+                Walkers = walkers
+            };
 
             if (owner == null)
             {
                 return NotFound();
             }
-
-            owner.Dogs = _dogRepo.GetDogsByOwnerId(id);
-
-            return View(owner);
+            return View(profileVM);
         }
 
         // GET: HomeController1/Create

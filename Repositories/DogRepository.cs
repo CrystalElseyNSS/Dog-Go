@@ -63,15 +63,15 @@ namespace Dog_Go.Repositories
                             Notes = ReaderHelpers.GetNullableString(reader, "Notes"),
                             ImageUrl = ReaderHelpers.GetNullableString(reader, "ImageUrl"),
                             OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
-                            Owner = new Owner
-                            {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                Name = reader.GetString(reader.GetOrdinal("Name")),
-                                Email = reader.GetString(reader.GetOrdinal("Email")),
-                                Address = reader.GetString(reader.GetOrdinal("Address")),
-                                Phone = reader.GetString(reader.GetOrdinal("Phone")),
-                                NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
-                            }
+                            // Owner = new Owner
+                            //{
+                            //    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            //    Name = reader.GetString(reader.GetOrdinal("Name")),
+                            //    Email = reader.GetString(reader.GetOrdinal("Email")),
+                            //    Address = reader.GetString(reader.GetOrdinal("Address")),
+                            //    Phone = reader.GetString(reader.GetOrdinal("Phone")),
+                            //    NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                            //}
                         };
 
                         Dogs.Add(dog);

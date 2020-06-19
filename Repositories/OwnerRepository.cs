@@ -86,8 +86,7 @@ namespace Dog_Go.Repositories
                             Email = reader.GetString(reader.GetOrdinal("Email")),
                             Address = reader.GetString(reader.GetOrdinal("Address")),
                             Phone = reader.GetString(reader.GetOrdinal("Phone")),
-                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
-                            Dogs = new List<Dog>(id)
+                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
                         };
 
                         reader.Close();
@@ -217,4 +216,3 @@ namespace Dog_Go.Repositories
         }
     }
 }
-
