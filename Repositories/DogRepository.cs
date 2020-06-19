@@ -202,8 +202,8 @@ namespace Dog_Go.Repositories
                     cmd.Parameters.AddWithValue("@Name", dog.Name);
                     cmd.Parameters.AddWithValue("@Breed", dog.Breed);
                     cmd.Parameters.AddWithValue("@OwnerId", dog.OwnerId);
-                    cmd.Parameters.AddWithValue("@Notes", dog.Notes);
-                    cmd.Parameters.AddWithValue("@ImageUrl", dog.ImageUrl);
+                    cmd.Parameters.AddWithValue("@notes", dog.Notes ?? "");
+                    cmd.Parameters.AddWithValue("@imageUrl", dog.ImageUrl ?? "");
 
                     int id = (int)cmd.ExecuteScalar();
 
