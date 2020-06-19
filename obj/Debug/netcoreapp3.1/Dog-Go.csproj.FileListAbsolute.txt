@@ -412,3 +412,5 @@ C:\Users\Crystal Elsey\workspace\Projects\Dog-Go\Dog-Go\obj\Debug\netcoreapp3.1\
 C:\Users\Crystal Elsey\workspace\Projects\Dog-Go\Dog-Go\obj\Debug\netcoreapp3.1\Dog-Go.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Crystal Elsey\workspace\Projects\Dog-Go\Dog-Go\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Delete.cshtml.g.cs
 C:\Users\Crystal Elsey\workspace\Projects\Dog-Go\Dog-Go\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Edit.cshtml.g.cs
+C:\Users\Crystal Elsey\workspace\Projects\Dog-Go\Dog-Go\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Login.cshtml.g.cs
+C:\Users\Crystal Elsey\workspace\Projects\Dog-Go\Dog-Go\obj\Debug\netcoreapp3.1\Razor\Views\Dogs\Index.cshtml.g.cs
