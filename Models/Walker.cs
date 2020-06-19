@@ -13,5 +13,6 @@ namespace Dog_Go.Models
         public string ImageUrl { get; set; }
         // Template for a new neighborhood instance:
         public Neighborhood Neighborhood { get; set; }
+        public List<Walks> Walks { get; set; }
     }
 }

@@ -66,10 +66,10 @@ namespace Dog_Go.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT w.Id, w.[Name], w.ImageUrl, w.NeighborhoodId, n.Name AS NeighborName
+                        SELECT w.Id, w.[Name], w.ImageUrl, w.NeighborhoodId, n.Name AS NeighborhoodName
                         FROM Walker w
                         LEFT JOIN Neighborhood n ON w.NeighborhoodId = n.Id
-                        WHERE Id = @id
+                        WHERE w.Id = @id
                     ";
 
                     cmd.Parameters.AddWithValue("@id", id);

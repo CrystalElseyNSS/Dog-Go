@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using Dog_Go.Models;
 
-namespace DogGo.Models.ViewModels
+namespace Dog_Go.Models.ViewModels
 {
-    public class ProfileViewModel
+    public class OwnerProfileViewModel
     {
         public Owner Owner { get; set; }
         public List<Walker> Walkers { get; set; }
         public List<Dog> Dogs { get; set; }
+        public List<Neighborhood> Neighborhoods { get; set; }
     }
 }

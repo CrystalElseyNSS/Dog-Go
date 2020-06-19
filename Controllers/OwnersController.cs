@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Dog_Go.Models;
 using Dog_Go.Repositories;
-using DogGo.Models.ViewModels;
+using Dog_Go.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +18,7 @@ namespace Dog_Go.Controllers
         private readonly OwnerRepository _ownerRepo;
         private readonly DogRepository _dogRepo;
         private readonly WalkerRepository _walkerRepo;
+        private readonly NeighborhoodRepository _neighborhoodRepo;
         private IConfiguration config;
 
         // The constructor accepts an IConfiguration object as a parameter. This class comes from the ASP.NET framework and is useful for retrieving things out of the appsettings.json file like connection strings.
@@ -26,6 +27,7 @@ namespace Dog_Go.Controllers
             _ownerRepo = new OwnerRepository(config);
             _dogRepo = new DogRepository(config);
             _walkerRepo = new WalkerRepository(config);
+            _neighborhoodRepo = new NeighborhoodRepository(config);
         }
         // GET: HomeController1
         public ActionResult Index()
@@ -41,7 +43,7 @@ namespace Dog_Go.Controllers
             List<Dog> dogs = _dogRepo.GetDogsByOwnerId(owner.Id);
             List<Walker> walkers = _walkerRepo.GetWalkersByNeighborhoodId(owner.NeighborhoodId);
 
-            ProfileViewModel profileVM = new ProfileViewModel()
+            OwnerProfileViewModel profileVM = new OwnerProfileViewModel()
             {
                 Owner = owner,
                 Dogs = dogs,
@@ -58,7 +60,15 @@ namespace Dog_Go.Controllers
         // GET: HomeController1/Create
         public ActionResult Create()
         {
-            return View();
+            List<Neighborhood> neighborhoods = _neighborhoodRepo.GetAllNeighborhoods();
+
+            OwnerFormViewModel vm = new OwnerFormViewModel()
+            {
+                Owner = new Owner(),
+                Neighborhoods = neighborhoods
+            };
+
+            return View(vm);
         }
 
         // POST: HomeController1/Create
@@ -82,13 +92,21 @@ namespace Dog_Go.Controllers
         public ActionResult Edit(int id)
         {
             Owner owner = _ownerRepo.GetOwnerById(id);
+            List<Dog> dogs = _dogRepo.GetDogsByOwnerId(owner.Id);
+            List<Walker> walkers = _walkerRepo.GetWalkersByNeighborhoodId(owner.NeighborhoodId);
+            List<Neighborhood> neighborhoods = _neighborhoodRepo.GetAllNeighborhoods();
 
+            OwnerFormViewModel ownerFormVM = new OwnerFormViewModel()
+            {
+                Owner = owner,
+                Neighborhoods = neighborhoods
+            };
             if (owner == null)
             {
                 return NotFound();
             }
 
-            return View(owner);
+            return View(ownerFormVM);
         }
 
         // POST: HomeController1/Edit/5
