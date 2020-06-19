@@ -34,8 +34,16 @@ namespace Dog_Go.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, [Name], Breed, Notes, ImageUrl, OwnerId
-                        FROM Dog
+                        SELECT 
+                            d.Id, 
+                            d.[Name], 
+                            d. Breed, 
+                            d. Notes, 
+                            d. ImageUrl, 
+                            d.OwnerId,
+                            o.Name
+                        FROM Dog d
+                        LEFT JOIN Owner o ON d.OwnerId = o.Id
                         WHERE OwnerId = @ownerId
                     ";
 
@@ -54,7 +62,16 @@ namespace Dog_Go.Repositories
                             Breed = reader.GetString(reader.GetOrdinal("Breed")),
                             Notes = ReaderHelpers.GetNullableString(reader, "Notes"),
                             ImageUrl = ReaderHelpers.GetNullableString(reader, "ImageUrl"),
-                            OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId"))
+                            OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
+                            Owner = new Owner
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                                Email = reader.GetString(reader.GetOrdinal("Email")),
+                                Address = reader.GetString(reader.GetOrdinal("Address")),
+                                Phone = reader.GetString(reader.GetOrdinal("Phone")),
+                                NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                            }
                         };
 
                         Dogs.Add(dog);
@@ -206,19 +223,19 @@ namespace Dog_Go.Repositories
                     cmd.CommandText = @"
                             UPDATE Dog
                             SET 
-                                [Name] = @Name, 
-                                Breed = @Breed, 
-                                OwnerId = @OwnerId, 
-                                Notes = @Notes, 
-                                ImageUrl = @ImageUrl
-                            WHERE Id = @Id";
+                                [Name] = @name, 
+                                Breed = @breed, 
+                                OwnerId = @ownerId, 
+                                Notes = @notes, 
+                                ImageUrl = @imageUrl
+                            WHERE Id = @id";
 
-                    cmd.Parameters.AddWithValue("@Name", dog.Name);
-                    cmd.Parameters.AddWithValue("@Breed", dog.Breed);
-                    cmd.Parameters.AddWithValue("@OwnerId", dog.OwnerId);
-                    cmd.Parameters.AddWithValue("@Notes", dog.Notes);
-                    cmd.Parameters.AddWithValue("@ImageUrl", dog.ImageUrl);
-                    cmd.Parameters.AddWithValue("@Id", dog.Id);
+                    cmd.Parameters.AddWithValue("@name", dog.Name);
+                    cmd.Parameters.AddWithValue("@breed", dog.Breed);
+                    cmd.Parameters.AddWithValue("@ownerId", dog.OwnerId);
+                    cmd.Parameters.AddWithValue("@notes", dog.Notes ?? "");
+                    cmd.Parameters.AddWithValue("@imageUrl", dog.ImageUrl ?? "");
+                    cmd.Parameters.AddWithValue("@id", dog.Id);
 
                     cmd.ExecuteNonQuery();
                 }

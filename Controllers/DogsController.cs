@@ -10,11 +10,13 @@ namespace Dog_Go.Controllers
     public class DogsController : Controller
     {
         private readonly DogRepository _dogRepo;
+        private readonly OwnerRepository _ownerRepo;
         private IConfiguration config;
 
         public DogsController(IConfiguration config)
         {
             _dogRepo = new DogRepository(config);
+            _ownerRepo = new OwnerRepository(config);
         }
 
         public ActionResult Index()
